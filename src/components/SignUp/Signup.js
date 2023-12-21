@@ -1,6 +1,6 @@
 // Signup.js
 import React, { useState } from 'react';
-import axios from 'axios';
+import { signup } from '../actions/authActions';
 
 function Signup() {
   const [username, setUsername] = useState('');
@@ -10,11 +10,7 @@ function Signup() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    axios.post('http://your-wordpress-site.com/wp-json/wp/v2/users/register', {
-      username,
-      email,
-      password
-    })
+    signup(username, email, password)
       .then(response => {
         // Handle successful registration
         console.log(response.data);

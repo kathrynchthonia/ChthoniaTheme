@@ -1,7 +1,8 @@
 // authActions.js
 import axios from 'axios';
 
-const WP_API_URL = process.env.REACT_APP_WP_API_URL;
+const WP_API_URL = process.env.WP_API_URL;
+const WP_URL = process.env.WP_URL;
 
 export function signup(username, email, password) {
   return axios.post(`${WP_API_URL}/wp/v2/users/register`, {
@@ -36,4 +37,8 @@ export function logout() {
 
 export function isAuthenticated() {
   return !!localStorage.getItem('token');
+}
+
+export function resetPassword() {
+  window.location.href = 'WP_URL/wp-login.php?action=lostpassword';
 }
