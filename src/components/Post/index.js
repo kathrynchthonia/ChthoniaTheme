@@ -1,7 +1,7 @@
 // Post.js
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchPost } from '../actions/wordpressAPIActions';
+import { fetchPost } from '../../actions/wordpressAPIActions';
 
 class Post extends Component {
   componentDidMount() {

@@ -11,6 +11,7 @@ import Post from '../components/Post';
 import Dashboard from '../components/Dashboard';
 import Profile from '../components/Profile';
 
+
 function AuthenticatedRoutes() {
   return (
     <Router>

@@ -3,8 +3,8 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { isAuthenticated } from './actions/authActions';
 import './App.css';
-import AuthenticatedRoutes from './components/Routes/AuthenticatedRoutes';
-import NonAuthenticatedRoutes from './components/Routes/NonAuthenticatedRoutes';
+import AuthenticatedRoutes from './Routes/AuthenticatedRoutes';
+import NonAuthenticatedRoutes from './Routes/NonAuthenticatedRoutes';
 
 function App(props) {
   const { isAuthenticated, auth } = props;

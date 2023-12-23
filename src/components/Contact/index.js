@@ -1,7 +1,7 @@
 // Contact.js
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchPage } from '../actions/wordpressAPIActions';
+import { fetchPage } from '../../actions/wordpressAPIActions';
 
 class Contact extends Component {
   componentDidMount() {

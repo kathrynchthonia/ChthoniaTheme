@@ -1,7 +1,7 @@
 // Login.js
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { login, resetPassword } from '../actions/authActions';
+import { login, resetPassword } from '../../actions/authActions';
 
 function Login() {
   const [username, setUsername] = useState('');

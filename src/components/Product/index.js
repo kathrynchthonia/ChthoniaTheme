@@ -1,7 +1,7 @@
 // Product.js
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchProduct } from '../actions/woocommerceAPIActions';
+import { fetchProduct } from '../../actions/wooCommerceAPIActions';
 
 class Product extends Component {
   componentDidMount() {
