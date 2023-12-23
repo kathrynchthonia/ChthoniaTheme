@@ -4,21 +4,7 @@ import axios from 'axios';
 const WP_API_URL = process.env.WP_API_URL;
 const WP_URL = process.env.WP_URL;
 
-export function signup(username, email, password) {
-  return axios.post(`${WP_API_URL}/wp/v2/users/register`, {
-    username,
-    email,
-    password
-  })
-    .then(response => {
-      // The response includes the token
-      const token = response.data.token;
-      localStorage.setItem('token', token);
-      return response;
-    });
-}
-
-export function login(username, password) {
+export const login = (username, password) => dispatch => {
   return axios.post(`${WP_API_URL}/jwt-auth/v1/token`, {
     username,
     password
@@ -27,13 +13,19 @@ export function login(username, password) {
       // The response includes the token
       const token = response.data.token;
       localStorage.setItem('token', token);
-      return response;
+      dispatch(setCurrentUser(response.data.user));
     });
 }
 
-export function logout() {
+export const logout = () => dispatch => {
   localStorage.removeItem('token');
+  dispatch(setCurrentUser({}));
 }
+
+const setCurrentUser = user => ({
+  type: 'SET_CURRENT_USER',
+  payload: user
+});
 
 export function isAuthenticated() {
   return !!localStorage.getItem('token');

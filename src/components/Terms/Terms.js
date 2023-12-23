@@ -1,13 +1,29 @@
 // Terms.js
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { fetchPage } from '../actions/wordpressAPIActions';
 
-function Terms() {
+function Terms(props) {
+  const { fetchPage, page } = props;
+
+  useEffect(() => {
+    fetchPage(4); // Replace 4 with the ID of your terms page
+  }, [fetchPage]);
+
+  if (!page) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
-      <h1>Terms and Conditions</h1>
-      <p>Read our terms and conditions here.</p>
+      <h1>{page.title.rendered}</h1>
+      <div dangerouslySetInnerHTML={{ __html: page.content.rendered }} />
     </div>
   );
 }
 
-export default Terms;
+const mapStateToProps = state => ({
+  page: state.pages.page
+});
+
+export default connect(mapStateToProps, { fetchPage })(Terms);

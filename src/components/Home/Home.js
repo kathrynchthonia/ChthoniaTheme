@@ -1,21 +1,14 @@
 // Home.js
-import React, { useState, useEffect } from 'react';
-import fetchPosts from '../WordpressAPI/WordpressAPI';
-import fetchProducts from '../WooCommerceAPI/WooCommerceAPI';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { fetchPosts } from '../../actions/wordpressAPIActions';
+import { fetchProducts } from '../../actions/wooCommerceAPIActions';
 
-function Home() {
-  const [posts, setPosts] = useState([]);
-  const [products, setProducts] = useState([]);
-
+function Home({ fetchPosts, fetchProducts, posts, products }) {
   useEffect(() => {
-    fetchPosts().then(fetchedPosts => {
-      setPosts(fetchedPosts);
-    });
-
-    fetchProducts().then(fetchedProducts => {
-      setProducts(fetchedProducts);
-    });
-  }, []);
+    fetchPosts();
+    fetchProducts();
+  }, [fetchPosts, fetchProducts]);
 
   return (
     <div className="container mx-auto px-4">
@@ -38,4 +31,9 @@ function Home() {
   );
 }
 
-export default Home;
+const mapStateToProps = state => ({
+  posts: state.posts.posts,
+  products: state.products.products
+});
+
+export default connect(mapStateToProps, { fetchPosts, fetchProducts })(Home);

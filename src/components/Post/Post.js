@@ -1,30 +1,31 @@
 // Post.js
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchPost } from '../actions/wordpressAPIActions';
 
-const WP_API_URL = process.env.WP_API_URL;
+class Post extends Component {
+  componentDidMount() {
+    this.props.fetchPost(this.props.match.params.id);
+  }
 
-function Post({ match }) {
-  const [post, setPost] = useState(null);
+  render() {
+    const { post } = this.props;
 
-  useEffect(() => {
-    axios.get(`${WP_API_URL}/wp/v2/posts/${match.params.id}`)
-      .then(response => {
-        setPost(response.data);
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }, [match.params.id]);
+    if (!post) {
+      return <div>Loading...</div>;
+    }
 
-  return post ? (
-    <div>
-      <h1>{post.title.rendered}</h1>
-      <div dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
-    </div>
-  ) : (
-    <div>Loading...</div>
-  );
+    return (
+      <div>
+        <h1>{post.title.rendered}</h1>
+        <div dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
+      </div>
+    );
+  }
 }
 
-export default Post;
+const mapStateToProps = state => ({
+  post: state.posts.post
+});
+
+export default connect(mapStateToProps, { fetchPost })(Post);

@@ -1,13 +1,29 @@
 // Privacy.js
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { fetchPage } from '../actions/wordpressAPIActions';
 
-function Privacy() {
+function Privacy(props) {
+  const { fetchPage, page } = props;
+
+  useEffect(() => {
+    fetchPage(3); // Replace 3 with the ID of your privacy page
+  }, [fetchPage]);
+
+  if (!page) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
-      <h1>Privacy Policy</h1>
-      <p>Read our Privacy Policy here.</p>
+      <h1>{page.title.rendered}</h1>
+      <div dangerouslySetInnerHTML={{ __html: page.content.rendered }} />
     </div>
   );
 }
 
-export default Privacy;
+const mapStateToProps = state => ({
+  page: state.pages.page
+});
+
+export default connect(mapStateToProps, { fetchPage })(Privacy);

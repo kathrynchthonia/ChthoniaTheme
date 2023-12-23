@@ -1,20 +1,43 @@
-// woocommerceAPI.js
+// actions/wooCommerceAPIActions.js
 import axios from 'axios';
+import qs from 'qs';
 
-const CONSUMER_KEY = process.env.CONSUMER_KEY;
-const CONSUMER_SECRET = process.env.CONSUMER_SECRET;
+const WC_API_URL = process.env.REACT_APP_WC_API_URL;
+const CONSUMER_KEY = process.env.REACT_APP_WC_CONSUMER_KEY;
+const CONSUMER_SECRET = process.env.REACT_APP_WC_CONSUMER_SECRET;
 
-const fetchProducts = () => {
-  return axios.get('http://your-wordpress-site.com/wp-json/wc/v3/products', {
-    params: {
-      consumer_key: CONSUMER_KEY,
-      consumer_secret: CONSUMER_SECRET
-    }
-  })
-    .then(response => response.data)
+export const fetchProducts = () => dispatch => {
+  const queryParams = qs.stringify({
+    consumer_key: CONSUMER_KEY,
+    consumer_secret: CONSUMER_SECRET
+  });
+
+  axios.get(`${WC_API_URL}/products?${queryParams}`)
+    .then(response => {
+      dispatch({
+        type: 'FETCH_PRODUCTS',
+        payload: response.data
+      });
+    })
     .catch(error => {
       console.error(error);
     });
 };
 
-export default fetchProducts;
+export const fetchProduct = id => dispatch => {
+  const queryParams = qs.stringify({
+    consumer_key: CONSUMER_KEY,
+    consumer_secret: CONSUMER_SECRET
+  });
+
+  axios.get(`${WC_API_URL}/products/${id}?${queryParams}`)
+    .then(response => {
+      dispatch({
+        type: 'FETCH_PRODUCT',
+        payload: response.data
+      });
+    })
+    .catch(error => {
+      console.error(error);
+    });
+};

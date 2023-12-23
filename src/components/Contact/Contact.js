@@ -1,13 +1,31 @@
 // Contact.js
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchPage } from '../actions/wordpressAPIActions';
 
-function Contact() {
-  return (
-    <div>
-      <h1>Contact</h1>
-      <p>Get in touch with us.</p>
-    </div>
-  );
+class Contact extends Component {
+  componentDidMount() {
+    this.props.fetchPage(2); // Replace 2 with the ID of your contact page
+  }
+
+  render() {
+    const { page } = this.props;
+
+    if (!page) {
+      return <div>Loading...</div>;
+    }
+
+    return (
+      <div>
+        <h1>{page.title.rendered}</h1>
+        <div dangerouslySetInnerHTML={{ __html: page.content.rendered }} />
+      </div>
+    );
+  }
 }
 
-export default Contact;
+const mapStateToProps = state => ({
+  page: state.pages.page
+});
+
+export default connect(mapStateToProps, { fetchPage })(Contact);

@@ -1,5 +1,6 @@
 // Login.js
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { login, resetPassword } from '../actions/authActions';
 
 function Login() {
@@ -9,15 +10,7 @@ function Login() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    login(username, password)
-      .then(response => {
-        // Handle successful login
-        console.log(response.data);
-      })
-      .catch(error => {
-        // Handle error
-        console.error(error);
-      });
+    login(username, password);
   };
 
   return (
@@ -32,4 +25,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default connect(null, { login })(Login);
