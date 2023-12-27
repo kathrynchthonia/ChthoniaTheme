@@ -1,17 +1,16 @@
 // App.js
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { isAuthenticated } from './actions/authActions';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import AuthenticatedRoutes from './Routes/AuthenticatedRoutes';
 import NonAuthenticatedRoutes from './Routes/NonAuthenticatedRoutes';
 
 function App(props) {
-  const { isAuthenticated, auth } = props;
+  const [auth, setAuth] = useState(false);
 
   useEffect(() => {
-    isAuthenticated();
-  }, [isAuthenticated]);
+    const isAuthenticated = !!localStorage.getItem('token');
+    setAuth(isAuthenticated);
+  }, []);
 
   return (
     <div className="App">
@@ -20,8 +19,4 @@ function App(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  auth: state.auth.isAuthenticated
-});
-
-export default connect(mapStateToProps, { isAuthenticated })(App);
+export default App;

@@ -1,7 +1,7 @@
 // Store.js
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchProducts } from './actions/woocommerceAPIActions';
+import { fetchProducts } from '../../actions/wooCommerceAPIActions';
 import Paginate from 'react-paginate';
 
 class Store extends Component {

@@ -15,12 +15,15 @@ export const fetchProducts = () => dispatch => {
   axios.get(`${WC_API_URL}/products?${queryParams}`)
     .then(response => {
       dispatch({
-        type: 'FETCH_PRODUCTS',
+        type: 'FETCH_PRODUCTS_SUCCESS',
         payload: response.data
       });
     })
     .catch(error => {
-      console.error(error);
+      dispatch({
+        type: 'FETCH_PRODUCTS_ERROR',
+        payload: error
+      });
     });
 };
 
@@ -33,11 +36,14 @@ export const fetchProduct = id => dispatch => {
   axios.get(`${WC_API_URL}/products/${id}?${queryParams}`)
     .then(response => {
       dispatch({
-        type: 'FETCH_PRODUCT',
+        type: 'FETCH_PRODUCT_SUCCESS',
         payload: response.data
       });
     })
     .catch(error => {
-      console.error(error);
+      dispatch({
+        type: 'FETCH_PRODUCT_ERROR',
+        payload: error
+      });
     });
 };

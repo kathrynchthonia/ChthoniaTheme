@@ -2,7 +2,6 @@
 import axios from 'axios';
 
 const WP_API_URL = process.env.WP_API_URL;
-const WP_URL = process.env.WP_URL;
 
 export const login = (username, password) => dispatch => {
   return axios.post(`${WP_API_URL}/jwt-auth/v1/token`, {
@@ -14,23 +13,27 @@ export const login = (username, password) => dispatch => {
       const token = response.data.token;
       localStorage.setItem('token', token);
       dispatch(setCurrentUser(response.data.user));
+      dispatch({
+        type: 'LOGIN_SUCCESS',
+      });
+    })
+    .catch(error => {
+      dispatch({
+        type: 'LOGIN_ERROR',
+        payload: error
+      });
     });
 }
 
 export const logout = () => dispatch => {
   localStorage.removeItem('token');
   dispatch(setCurrentUser({}));
+  dispatch({
+    type: 'LOGOUT_SUCCESS',
+  });
 }
 
 const setCurrentUser = user => ({
   type: 'SET_CURRENT_USER',
   payload: user
 });
-
-export function isAuthenticated() {
-  return !!localStorage.getItem('token');
-}
-
-export function resetPassword() {
-  window.location.href = 'WP_URL/wp-login.php?action=lostpassword';
-}

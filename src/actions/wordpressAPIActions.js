@@ -6,12 +6,15 @@ export const fetchPosts = () => dispatch => {
   axios.get(`${WP_API_URL}/posts`)
     .then(response => {
       dispatch({
-        type: 'FETCH_POSTS',
+        type: 'FETCH_POSTS_SUCCESS',
         payload: response.data
       });
     })
     .catch(error => {
-      console.error(error);
+      dispatch({
+        type: 'FETCH_POSTS_ERROR',
+        payload: error
+      });
     });
 };
 
@@ -19,12 +22,15 @@ export const fetchPost = id => dispatch => {
   axios.get(`${WP_API_URL}/posts/${id}`)
     .then(response => {
       dispatch({
-        type: 'FETCH_POST',
+        type: 'FETCH_POST_SUCCESS',
         payload: response.data
       });
     })
     .catch(error => {
-      console.error(error);
+      dispatch({
+        type: 'FETCH_POST_ERROR',
+        payload: error
+      });
     });
 };
 
@@ -32,11 +38,14 @@ export const fetchPage = id => dispatch => {
   axios.get(`${WP_API_URL}/pages/${id}`)
     .then(response => {
       dispatch({
-        type: 'FETCH_PAGE',
+        type: 'FETCH_PAGE_SUCCESS',
         payload: response.data
       });
     })
     .catch(error => {
-      console.error(error);
+      dispatch({
+        type: 'FETCH_PAGE_ERROR',
+        payload: error
+      });
     });
 };
